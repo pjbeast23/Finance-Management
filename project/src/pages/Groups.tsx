@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useGroup } from '../contexts/GroupContext'
-import { Users, Plus, Search, Filter } from 'lucide-react'
+import { Users, Plus, Search } from 'lucide-react'
 import Modal from '../components/UI/Modal'
 import GroupForm from '../components/Groups/GroupForm'
 import GroupSettings from '../components/Groups/GroupSettings'

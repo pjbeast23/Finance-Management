@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { useGroup } from '../contexts/GroupContext'
 import { InvestmentService, Investment, InvestmentSummary, PriceUpdateResult } from '../lib/investments'
 import { GroupInvestmentService } from '../lib/groupServices'
 import { TrendingUp, TrendingDown, DollarSign, Plus, Edit2, Trash2, RefreshCw } from 'lucide-react'
-import { format } from 'date-fns'
 import Modal from '../components/UI/Modal'
 import InvestmentForm from '../components/Forms/InvestmentForm'
 import InvestmentChart from '../components/Charts/InvestmentChart'
@@ -39,7 +38,12 @@ const Investments = () => {
       if (isGroupMode && currentGroup) {
         // Fetch GROUP investments only
         const groupInvestments = await groupInvestmentService.getGroupInvestments(currentGroup.id)
-        setInvestments(groupInvestments as Investment[])
+        // Map GroupInvestment to Investment by adding missing user_id field
+        const mappedInvestments = groupInvestments.map(inv => ({
+          ...inv,
+          user_id: inv.created_by // Use created_by as user_id for group investments
+        })) as Investment[]
+        setInvestments(mappedInvestments)
         
         // Calculate group investment summary
         const groupSummary = calculateGroupSummary(groupInvestments)

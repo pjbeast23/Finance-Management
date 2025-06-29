@@ -132,8 +132,6 @@ const SharedExpenseForm: React.FC<SharedExpenseFormProps> = ({ expense, onSubmit
     try {
       const group = groups.find(g => g.id === groupId)
       if (group) {
-        // Get group members from context
-        const { getGroupMembers } = await import('../../contexts/GroupContext')
         // For now, we'll use a simplified approach
         setGroupMembers([])
         toast('Group member integration coming soon!')
@@ -546,7 +544,7 @@ const SharedExpenseForm: React.FC<SharedExpenseFormProps> = ({ expense, onSubmit
                 <button
                   type="button"
                   onClick={() => addFriend(friend)}
-                  disabled={selectedFriends.find(f => f.friend_email === friend.friend_email)}
+                  disabled={Boolean(selectedFriends.find(f => f.friend_email === friend.friend_email))}
                   className="btn-primary text-xs py-1 px-2 disabled:opacity-50"
                 >
                   {selectedFriends.find(f => f.friend_email === friend.friend_email) ? 'Added' : 'Add'}

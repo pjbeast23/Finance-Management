@@ -1,5 +1,4 @@
 import { supabase } from './supabase'
-import { Group } from '../contexts/GroupContext'
 
 export interface GroupExpense {
   id: string
